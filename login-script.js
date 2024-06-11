@@ -28,7 +28,7 @@ studentSubmit.addEventListener('click', () => {
 		hasEmail = true
 	}
 	if (hasPassword && hasUsername && hasEmail) {
-		window.location.href = "class-select-page.html"
+		window.location.href = "class-selection/class-select-page.html"
 	}
 })
 

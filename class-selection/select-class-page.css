@@ -14,31 +14,34 @@
   display: grid;
   width: 100%;
   row-gap: 10px;
-  visibility: hidden;
 }
 
 .class-title {
-  font-size: 18px;
-  margin-left: 10px;
-  margin-top: 10px;
-  line-height: 22px;
+  word-wrap: break-word;
+  max-width: 100%;
+  font-size: 20px;
+  margin-left: 45%;
+  margin-top: 1%;
+  line-height: 50px;
 }
 
 .class-option {
   border: solid;
-  background-color: white;
   border-color: rgb(229, 229, 229);
   border-radius: 5px;
   border-width: 2px;
   box-shadow: 1.5px .5px 1.5px rgb(77, 76, 76);
   visibility: visible;
   height: 280px;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: 40% 100%;
 }
 
 .class-option:hover {
-  background-color: rgb(243, 242, 242);
+  border-color: rgb(191, 191, 191);
 }
 
 .class-option:active {
-  background-color: rgb(228, 223, 223);
+  border-color: rgb(134, 133, 133);
 }
