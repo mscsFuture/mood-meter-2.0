@@ -7,31 +7,49 @@
   <link rel="stylesheet" href="login-styles.css">
 </head>
 <body>
-	<div class="form-structor">
-		<div class="signup">
-			<h2 class="form-title" id="signup"><span>or</span>Student Login</h2>
-			<div class="form-holder">
-				<input type="text" id='username-input' class="input" placeholder="Name" />
-				<input type="email" id="student-email-input" class="input" placeholder="Email" />
-				<input type="password" id='password-input' class="input" placeholder="Password" />
-			</div>
-			<button id="student-submit-button" class="submit-btn">Student Login</button>
-		</div>
-		<div class="login slide-up">
-			<div class="center">
-				<h2 class="form-title" id="login"><span>or</span>Teacher Log in</h2>
-				<div class="form-holder">
-					<input type="email" id="teacher-email-input" class="input" placeholder="Email" required/>
-					<input type="password" id="teacher-password" class="input" placeholder="Password" required/>
-				</div>
-				<button id="teacher-submit-button" class="submit-btn">Teacher Log in</button>
-				<a class="create-account-link" href="https://www.coindesk.com/price/bitcoin/">Don't have an account? Create one here</a>
-			</div>
-		</div>
-	</div>
-      </div>
-    </form>
-  </div>
+	<div class="flip-card">
+		<div class="flip-card-inner" id="flipCardInner">
+			<div class="flip-card-front">
+				<div class="form-structor">
+					<div class="student-login">
+						<h2 class="form-title" id="student-login"><span>or</span>Student Login</h2>
+						<div class="form-holder">
+							<input type="text" id='username-input' class="input" placeholder="Username" />
+							<input type="password" id='password-input' class="input" placeholder="Password" />
+						</div>
+						<button id="student-submit-button" class="submit-btn">Login as Student</button>
+					</div>  <!-- end signup -->
+					<div class="teacher-login slide-up">
+						<div class="center">
+							<h2 class="form-title" id="teacher-login"><span>or</span>Teacher Login</h2>
+							<div class="form-holder">
+								<input type="email" id="teacher-email-input" class="input" placeholder="Email" required/>
+								<input type="password" id="teacher-password" class="input" placeholder="Password" required/>
+							</div>
+							<button id="teacher-submit-button" class="submit-btn">Login as Teacher</button>
+							<button class="create-account-btn" onclick="rotateFlipCard()">Don't have an account? Create one here</a>
+						</div>
+					</div> <!-- end login slide-up -->
+				</div> <!-- end for-structor -->
+			</div> <!-- end flip-card-front -->
+			<div class="flip-card-back">
+					<div class="teacher-signup">
+					<h2 class="header" id="teacher-signup">Teacher Sign-Up</h2>
+					<div class="form-holder">
+						<input type="text" id='firstname-input' class="input" placeholder="First Name" required/>
+						<input type="text" id='lastname-input' class="input" placeholder="Last Name" required/>
+						<input type="email" id='email-input' class="input" placeholder="Email" required />
+						<input type="text" id='username-input' class="input" placeholder="Username"required />
+						<input type="password" id='password-input' class="input" placeholder="Password" required/>
+						<input type="password" id='confirm-password-input' class="input" placeholder="Confirm Password" required/>
+					</div>
+					<button id="student-submit-button" class="submit-btn">Submit</button>
+				</div>  <!-- end signup -->
+				<button id="back-button" class="back-button" onclick="rotateFlipCardBack()"></button>
+			</div> <!-- end flip-card-back -->
+		</div> <!-- end flip-card-inner -->
+	</div> <!-- end flip-card -->
+
   <script src="login-script.js"></script>
 </body>
 </html>

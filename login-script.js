@@ -1,10 +1,9 @@
 console.clear();
 
-const teacherHeader = document.getElementById('login');
-const studentHeader = document.getElementById('signup');
+const teacherHeader = document.getElementById('teacher-login');
+const studentHeader = document.getElementById('student-login');
 
 const studentPassword = document.getElementById('password-input');
-const studentEmail = document.getElementById('student-email-input');
 const studentUsername = document.getElementById('username-input');
 const studentSubmit = document.getElementById('student-submit-button');
 
@@ -23,9 +22,6 @@ studentSubmit.addEventListener('click', () => {
 	} 
 	if (studentUsername.value) {
 		hasUsername = true
-	}
-	if (studentEmail.value) {
-		hasEmail = true
 	}
 	if (hasPassword && hasUsername && hasEmail) {
 		window.location.href = "class-select-page.html"
@@ -89,4 +85,14 @@ function teacherSlideUp(e) {
 
 
 window.onload = function() {
+}
+
+function rotateFlipCard() {
+	const flipCardInner = document.getElementById('flipCardInner');
+	flipCardInner.style.transform = "rotateY(180deg)";
+}
+
+function rotateFlipCardBack() {
+	const flipCardInner = document.getElementById('flipCardInner');
+	flipCardInner.style.transform = "rotateY(0deg)";
 }
