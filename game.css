@@ -1,0 +1,123 @@
+:root {
+	--grid-cols: 0; /* This will be set to the correct number in game.js */
+	--grid-rows: 0; /* This will be set to the correct number in game.js */
+}
+
+.header-container {
+	height: 10%;
+	background-color: rgb(102, 169, 86);
+}
+
+body {
+  	display:flex;
+  	flex-direction:column;
+  	margin: 0;
+  	padding: 0;
+  	height: 100vh;
+  	width:100%;
+	background-color:black;
+}
+
+.game-container {
+  	height: 100%;
+  	width: 100%;
+  	display: flex;
+  	flex-direction: row;
+  	background-color:whitesmoke;
+}
+
+.blockly-container {
+	height: 100%;
+	width: 40%;
+	background-color:rgb(58, 107, 149);
+}
+
+.grid-container-wrapper {
+	width: 60%;
+	height:fit-content;
+	background-color:black;
+}
+
+.grid-container {
+	display: grid;
+	margin:4px;
+	gap: 4px;
+	background-color:black;
+	grid-template-rows: repeat(var(--grid-rows), 1fr);
+	grid-template-columns: repeat(var(--grid-cols), 1fr);
+  }
+
+.mini-grid-cell {
+	position: relative;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	background-size: contain;
+	aspect-ratio: 1;
+	flex-direction: column;
+}
+
+@font-face {
+	font-family:'RobotoCondensed-Bold';
+	src: url('fonts/roboto-condensed/RobotoCondensed-Bold.ttf');
+}
+
+.mini-grid-cell-text {
+	display:flex;
+	text-align:center;
+	font-size: 1.25em;
+	font-family:'RobotoCondensed-Bold','Comic Sans MS', monospace;
+	margin-bottom: 10px;
+}
+
+.mini-grid-cell-image {
+	height: 50%;
+	width: 50%;
+	background-size: contain;
+}
+
+@font-face {
+	font-family:'Steelfish';
+	src: url('fonts/steelfish/steelfish rg.otf');
+}
+
+.maxi-grid-cell {
+	position: relative;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	background-size: contain;
+	aspect-ratio: 1;
+	flex-direction: column;
+}
+.maxi-grid-cell-text {
+	display:flex;
+	text-align:center;
+	font-size: 1em;
+	font-family:'Steelfish', monospace;
+	font-stretch: narrower;
+}
+
+
+
+.he-hp { /* high-energy, high pleasantness */
+	background-color: yellow;
+}
+
+.he-lp { /* high-energy, low pleasantness */
+	background-color: red;
+}
+
+.le-lp { /* low energy, low pleasantness */
+	background-color: blue;
+	color: white;
+}
+
+.le-hp { /* low energy, high pleasantness */
+	background-color: green;
+	color: white;
+}
+
+.empty {
+	background-color: white;
+}
