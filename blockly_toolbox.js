@@ -42,33 +42,6 @@ var toolbox = {
     },
     {
       "kind": "category",
-      "name": "Placement Blocks",
-      "colour": "10",
-      "contents": [
-        {
-          "kind": "block",
-          "type": "place_right"
-        },
-        {
-          "kind": "block",
-          "type": "place_left"
-        },
-        {
-          "kind": "block",
-          "type": "tree"
-        },
-        {
-          "kind": "block",
-          "type": "grass"
-        },
-        {
-          "kind": "block",
-          "type": "stone"
-        }
-      ]
-    },
-    {
-      "kind": "category",
       "name": "Loop Blocks",
       "colour": "60",
       "contents": [

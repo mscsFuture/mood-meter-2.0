@@ -16,32 +16,44 @@
 	<script src="blockly_implementation.js"></script>
 </head>
 <body>
-	<div class="header-container">
-		
+	<div class="header-container-wrapper">
+		<div class="header-container">
+			<button class="header-button start-button" type="button">Run Code!</button>
+		</div>
 	</div>
 
 	<div class="game-container">
-		<div id=blocklyContainer class="blockly-container">
-		  <script>
-			const workspace = Blockly.inject('blocklyContainer', { toolbox: toolbox });
-			// Define the XML for the custom 'start_block'
-			const startBlockXml = `<block type="start_block"></block>`;
-	
-			// Parse the XML text for the custom block using DOMParser
-			const domParser = new DOMParser();
-			const startBlockDom = domParser.parseFromString(startBlockXml, 'text/xml');
-	
-			// Add the custom 'start_block' to the existing toolbox configuration
-			Blockly.Xml.appendDomToWorkspace(startBlockDom, workspace);
-			function updateCode(event) {
-			  if (workspace.isDragging()) return;
-			  const code = javascript.javascriptGenerator.workspaceToCode(workspace);
-			  console.log("Workspace changed!");
-			  console.log(code);
-			}
-			workspace.addChangeListener(updateCode);
-		  </script>
-		</div>
+		<div class="blockly-container-wrapper">
+			<div id="blocklyContainer" class="blockly-container">
+				<div id=blocklyDiv>
+					<script>
+						const workspace = Blockly.inject('blocklyDiv', 
+						{ toolbox: toolbox,
+							horizontalLayout: false,
+							scrollbars: false,
+							trashcan: false,
+
+						});
+						// Define the XML for the custom 'start_block'
+						const startBlockXml = `<block type="start_block"></block>`;
+				
+						// Parse the XML text for the custom block using DOMParser
+						const domParser = new DOMParser();
+						const startBlockDom = domParser.parseFromString(startBlockXml, 'text/xml');
+				
+						// Add the custom 'start_block' to the existing toolbox configuration
+						Blockly.Xml.appendDomToWorkspace(startBlockDom, workspace);
+						function updateCode(event) {
+						if (workspace.isDragging()) return;
+						const code = javascript.javascriptGenerator.workspaceToCode(workspace);
+						console.log("Workspace changed!");
+						console.log(code);
+						}
+						workspace.addChangeListener(updateCode);
+					</script>
+				</div> <!-- end blocklyDiv -->
+			</div>  <!-- end blockly-container -->
+		</div> <!-- end blockly-container-wrapper -->
 		<div class="grid-container-wrapper">
 			<div id="gridContainer" class="grid-container">
 				<!-- grid will be dynamically generated -->

@@ -2,6 +2,7 @@
 window.onload = function() {
 	console.log("Entering window.onload()...");
 	gameInit();
+	window.dispatchEvent(new Event('resize')); //Fix issue with blockly workspace not rendering as the correct height initially
 	console.log("...Exiting window.onload()");
 }
 
@@ -19,7 +20,7 @@ function gameInit() {
 	else {
 		console.log("error getting version info");
 	}
-	console.log("...Exiting gameInit)");
+	console.log("...Exiting gameInit()");
 }
 
 
