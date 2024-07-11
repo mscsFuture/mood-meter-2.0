@@ -4,9 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-// var indexRouter = require('./routes/index');
-// var classSelectRouter = require('./routes/class-select');
-
 var app = express();
 
 // view engine setup
@@ -20,9 +17,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// app.use('/', indexRouter);
-// app.use('/class-select-page.ejs', classSelectRouter);
-
 
 let server = require("./server");
 let pool = server.makeConnection();
@@ -30,22 +24,14 @@ let pool = server.makeConnection();
 
 app.get('/api', async (req, res) => {
   let classList = await server.getClassList(pool)
-  console.log("app.js");
-  console.log(classList);
   res.status(200).json(classList);
 });
 
 app.post("/api-password", async (req, res) => {
   console.log('Payload is: ' + JSON.stringify(req.body, null, 2));
-  // JSON.stringify(req.body, null, 2)
   const verdict = await server.verifyPasswordUsername(pool, req.body);
-  console.log("verdict: " + verdict);
   res.send(JSON.stringify(verdict));
 });
-
-
-
-
 
 
 
@@ -64,7 +50,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 
 module.exports = app;
