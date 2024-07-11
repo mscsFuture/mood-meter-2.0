@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
+let server = require("../server");
+const app = require("../app");
 
-/* GET users listing. */
-router.get('/', function(req, res) {
-  res.render("class-select-page",  { title: 'Express' });
+router.get('/', async (req, res) => {
+  let pool = app.getPool();
+  let classList = await server.getClassList(pool);
+  res.status(200).json(classList);
 });
 
 

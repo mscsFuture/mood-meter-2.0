@@ -7,7 +7,7 @@ const nextAccessDate = ["June 12, 1924", "June 12, 1924", "June 15, 1924", "June
 
 let i = 0;
 // getClasses fetches from the database all info about each class that the current user is enrolled in. It returns an array of arrays(?) of JSONs
-let data = getClasses('http://localhost:3000/api');
+let data = getClasses('http://localhost:3000/class-select');
 console.log(data);
 const classNum = data.length;
 // classInfoArray will contain one or more dictionary objects, each of which will contain the name, mood type, and icon of each class the user is enrolled in

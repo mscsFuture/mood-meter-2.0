@@ -5,10 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -19,32 +16,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 let server = require("./server");
-let pool = server.makeConnection();
+
+const classSelectRoute = require('./routes/class-select');
+app.use('/class-select', classSelectRoute);
+
+const loginPageRoute = require('./routes/login-page');
+app.use('/login-page', loginPageRoute);
 
 
-app.get('/api', async (req, res) => {
-  let classList = await server.getClassList(pool)
-  res.status(200).json(classList);
-});
-
-app.post("/api-student-login", async (req, res) => {
-  console.log('Payload is: ' + JSON.stringify(req.body, null, 2));
-  const verdict = await server.verifyPasswordUsername(pool, req.body);
-  res.send(JSON.stringify(verdict));
-});
-
-app.post("/api-teacher-login", async (req, res) => {
-  console.log('Payload is: ' + JSON.stringify(req.body, null, 2));
-  const verdict = await server.verifyTeacherPasswordEmail(pool, req.body);
-  res.send(JSON.stringify(verdict));
-});
-
-app.post("/api-create-teacher-account", async (req, res) => {
-  console.log("Got to app");
-  // console.log('Payload is: ' + JSON.stringify(req.body, null, 2));
-  const verdict = await server.createTeacherAccount(pool, req.body);
-  res.send(JSON.stringify(verdict));
-});
+const pool = server.makeConnection();
+exports.getPool = function() {
+  return pool;
+}
 
 
 // catch 404 and forward to error handler
@@ -53,7 +36,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -63,7 +46,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
 module.exports = app;
 app.listen(3000);
-

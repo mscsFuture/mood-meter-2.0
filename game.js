@@ -6,7 +6,7 @@ window.onload = function() {
 	console.log("...Exiting window.onload()");
 }
 
-var version = 0; //0 is mood, 1 is mood jr.
+var version = 1; //0 is mood, 1 is mood jr.
 
 function gameInit() {
 	console.log("Entering gameInit...");

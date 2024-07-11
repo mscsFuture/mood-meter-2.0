@@ -28,17 +28,17 @@ studentPopupButton.addEventListener('click', () =>{
 	studentPopup.style.visibility = "hidden";
 });
 
-// this button will print out a "success" message if all student input fields
-// aren't empty
+
 studentSubmit.addEventListener('click', () => {
-	let verdict = false;
+	let response = {};
 	if (studentPassword.value && studentUsername.value) {
-		verdict = sendData('http://localhost:3000/api-student-login', studentPassword.value, studentUsername.value);
-		console.log("Student button pressed: " + verdict);
+		response = JSON.parse(sendData('http://localhost:3000/login-page/student-login', studentPassword.value, studentUsername.value));
+		console.log("Student button pressed: " + response.verdict);
+		console.log(response.key);
 	} 
-	if (verdict === "true") {
+	if (response.verdict == "true") {
 		window.location.href = "./class-select-page.html";
-	} else if (verdict === '"Invalid username"' || verdict === '"Invalid password"') {
+	} else if (response.verdict === '"Invalid username"' || response.verdict === '"Invalid password"') {
 			studentPopup.style.visibility = "visible";
 			studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Invalid username/password.";
 	} else if (!(studentPassword.value && studentUsername.value)) {
@@ -49,12 +49,12 @@ studentSubmit.addEventListener('click', () => {
 		studentPopup.style.visibility = "visible";
 		studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Something went wrong. Please try again.";
 	}
-})
+});
 
 teacherSubmit.addEventListener('click', () => {
 	let verdict = false;
 	if (teacherPassword.value && teacherEmail.value) {
-		verdict = sendData('http://localhost:3000/api-teacher-login', teacherPassword.value, teacherEmail.value);
+		verdict = sendData('http://localhost:3000/login-page/teacher-login', teacherPassword.value, teacherEmail.value);
 		console.log(verdict);
 	} 
 	if (verdict === "true") {
@@ -70,7 +70,7 @@ teacherSubmit.addEventListener('click', () => {
 		studentPopup.style.visibility = "visible";
 		studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Something went wrong. Please try again.";
 	}
-})
+});
 
 
 teacherHeader.addEventListener('click', teacherSlideUp);
@@ -103,7 +103,7 @@ function teacherSlideUp(e) {
 		if(element !== "slide-up") {
 			if (parent.classList.length < 2) 
 				parent.classList.add('slide-up')
-		}else{
+		} else{
 			studentHeader.parentNode.classList.add('slide-up')
 			parent.classList.remove('slide-up')
 			teacherHeader.removeEventListener('click', teacherSlideUp)
@@ -141,7 +141,7 @@ createTeacherButton.addEventListener('click', () => {
 		studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>The two passwords entered are not the same.";
 	} else {
 		const payload = `{"firstName": "${firstName.value}", "lastName": "${lastName.value}", "email": "${newEmail.value}", "username": "${newUsername.value}", "password": "${newPassword.value}"}`
-		let verdict = sendDataAlt("/api-create-teacher-account", payload);
+		let verdict = sendDataAlt("login-page/create-teacher-account", payload);
 		console.log("Create account button pressed: " + verdict);
 	}
 });
