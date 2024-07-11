@@ -16,19 +16,24 @@ const teacherSubmit = document.getElementById('teacher-submit-button')
 // this button will print out a "success" message if all student input fields
 // aren't empty
 studentSubmit.addEventListener('click', () => {
+	let verdict = false;
 	let hasPassword = false
 	let hasUsername = false
 	let hasEmail = false
 	if (studentPassword.value && studentUsername.value) {
 		hasPassword = true;
-		let verdict = sendData('http://localhost:3000/api-password', studentPassword.value, studentUsername.value);
-		console.log(verdict);
+		verdict = sendData('http://localhost:3000/api-password', studentPassword.value, studentUsername.value);
+		console.log("Webpage verdict: ");
 	} 
 	if (studentEmail.value) {
 		hasEmail = true
 	}
-	if (hasPassword && hasUsername && hasEmail) {
+	if (verdict === "true") {
 		window.location.href = "/class-select-page.html";
+	} else if (verdict === "Invalid username") {
+		console.log(verdict);
+	} else if (verdict === "Invalid password") {
+		console.log(verdict);
 	}
 })
 
@@ -59,7 +64,7 @@ function studentSlideUp(e) {
 		if(element !== "slide-up") {
 			if (parent.classList.length < 2) 
 				parent.classList.add('slide-up')
-		}else{
+		} else{
 			teacherHeader.parentNode.parentNode.classList.add('slide-up')
 			parent.classList.remove('slide-up')
 			studentHeader.removeEventListener('click', studentSlideUp)

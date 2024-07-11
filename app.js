@@ -27,10 +27,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 let server = require("./server");
 let pool = server.makeConnection();
 
-// classList is what we want to send to the front-end
-let classList = server.getClassList(pool);
 
-app.get('/api', (req, res) => {
+app.get('/api', async (req, res) => {
+  let classList = await server.getClassList(pool)
+  console.log("app.js");
   console.log(classList);
   res.status(200).json(classList);
 });
@@ -40,7 +40,7 @@ app.post("/api-password", async (req, res) => {
   // JSON.stringify(req.body, null, 2)
   const verdict = await server.verifyPasswordUsername(pool, req.body);
   console.log("verdict: " + verdict);
-  res.send("testing: " + JSON.stringify(verdict));
+  res.send(JSON.stringify(verdict));
 });
 
 

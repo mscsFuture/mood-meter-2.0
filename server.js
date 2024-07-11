@@ -51,7 +51,7 @@ exports.getUsername = function(pool) {
 
 //     await promise1;
 
-//     let promise2 = new Promise((resolve, reject) => {
+///     let promise2 = new Promise((resolve, reject) => {
 //       let completedQueries = 0;
 //       for (i = 0; i < idArray.length; i++) {
 //         pool.query(`SELECT * FROM class WHERE class_id=${idArray[i]}`, function (error, results, fields) {
@@ -77,51 +77,42 @@ exports.verifyPasswordUsername = async function(pool, passwordUsernameInput) {
   studentID = -1;
   username = passwordUsernameInput.username;
   password = passwordUsernameInput.password;
-  console.log(username);
-  console.log(password);
-  let flag = 0;
-  await pool.getConnection(async function(err, connection) {
-    if (err) throw err;
   
-    await new Promise((resolve, reject) => {
-      connection.query(`SELECT student_id FROM student WHERE username LIKE '${username}'`, function (error, results, fields) {
-        if (error) return reject(error);
-        console.log("These are the username results: " + JSON.stringify(results, null, 2));
-        if (results.length > 0) {
-          isCorrectUser = true;
-          studentID = 0;
-        }
+  let promise1 = new Promise((resolve, reject) => {
+    pool.query(`SELECT student_id FROM student WHERE username LIKE '${username}'`, function (error, results, fields) {
+      if (error) return reject(error);
+      console.log("These are the username results: " + JSON.stringify(results, null, 2));
+      if (results.length > 0) {
+        isCorrectUser = true;
+        studentID = 0;
+      }
+      return resolve("Success");
+      });
+  });
 
-        if (isCorrectUser === true) {
-            connection.query(`SELECT password FROM student WHERE student_id=${studentID}`, function (error, results, fields) {
-              if (error) return reject(error);
-              console.log("Got here!");
-              if (results[0].password == password) {
-                isCorrectUser = true;
-              } else {
-                isCorrectUser = false;
-              }
-            });
-        }
-        return resolve("Success");
+  await promise1;
+
+  if (isCorrectUser === true) {
+    let promise2 = new Promise((resolve, reject) => {
+        pool.query(`SELECT password FROM student WHERE student_id=${studentID}`, function (error, results, fields) {
+          if (error) return reject(error);
+          console.log("Got here!");
+          if (results[0].password == password) {
+            isCorrectUser = true;
+          } else {
+            isCorrectUser = "Invalid password";
+          }
+          resolve("Success");
         });
     });
-      // console.log("reached flag");
-      // flag = 1;
-      connection.release();
-      return;
-    });
-    // while (!flag) {
-    
-    // }
-    // setTimeout(ran, 3000);
-    console.log("RETURNING");
-    return isCorrectUser;
+  await promise2;
+} else {
+  isCorrectUser = "Invalid username";
 }
 
-// function ran() {
-//   console.log("RAN");
-// }
+  console.log("RETURNING");
+  return isCorrectUser;
+}
 
 
 exports.getClassList = async function(pool) {
@@ -145,15 +136,19 @@ exports.getClassList = async function(pool) {
   await promise1;
 
   for (i = 0; i < idArray.length; i++) {
-    await pool.query(`SELECT * FROM class WHERE class_id=${idArray[i]}`, function (error, results, fields) {
-      if (error) return reject(error);
-      classArray[i] = results;
-      console.log(classArray[i]);
-  })
 
-
+    let promise2 = new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM class WHERE class_id=${idArray[i]}`, function (error, results, fields) {
+        if (error) return reject(error);
+        classArray[i] = results;
+        // console.log(classArray[i]);
+        resolve("Success");
+    });
+    });
+    await promise2;
+  }
 
   // console.log(classArray);
-  console.log("RETURNING CLASS");
+  console.log(classArray);
   return classArray;
-}}
+}
