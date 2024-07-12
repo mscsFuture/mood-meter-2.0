@@ -27,12 +27,17 @@ app.get('/api', async (req, res) => {
   res.status(200).json(classList);
 });
 
-app.post("/api-password", async (req, res) => {
+app.post("/api-student-login", async (req, res) => {
   console.log('Payload is: ' + JSON.stringify(req.body, null, 2));
   const verdict = await server.verifyPasswordUsername(pool, req.body);
   res.send(JSON.stringify(verdict));
 });
 
+app.post("/api-teacher-login", async (req, res) => {
+  console.log('Payload is: ' + JSON.stringify(req.body, null, 2));
+  const verdict = await server.verifyTeacherPasswordEmail(pool, req.body);
+  res.send(JSON.stringify(verdict));
+});
 
 
 // catch 404 and forward to error handler

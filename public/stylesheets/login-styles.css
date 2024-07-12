@@ -13,6 +13,39 @@ html,body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.popup {
+	visibility: hidden;
+	background-color: white;
+	position: absolute;
+	display: inline-block;
+	height: 140px;
+	width: 300px;
+	z-index: 1;
+	border-radius: 6px;
+	box-shadow: 1.5px 3px 5px rgb(65, 65, 65);
+}
+
+.popuptext {
+	margin-left: 10px;
+	margin-top: 3%;
+	font-size: 15px;
+	line-height: 33px;
+  color: #000000;
+  position: absolute;
+}
+
+.popup-button {
+	margin-left: 70%;
+	margin-top: 30%;
+	position: absolute;
+	cursor: pointer;
+	height: 30px;
+	width: 70px;
+	color: white;
+	background-color: rgb(42, 159, 255);
+	border: none;
+	border-radius: 5px;
+}
 
 .flip-card {
 	background-color:transparent;
@@ -447,4 +480,5 @@ html,body {
 	-webkit-transform: rotate(135deg);
 	cursor: pointer;
   }
+
 

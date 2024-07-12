@@ -10,47 +10,67 @@ const studentSubmit = document.getElementById('student-submit-button');
 
 const teacherEmail = document.getElementById('teacher-email-input');
 const teacherPassword = document.getElementById('teacher-password');
-const teacherSubmit = document.getElementById('teacher-submit-button')
+const teacherSubmit = document.getElementById('teacher-submit-button');
+
+const rotateButton = document.getElementById("rotate-flip-button");
+const backButton = document.getElementById("back-button");
+
+const studentPopup = document.getElementById("student-popup");
+const studentPopupText = document.getElementById("student-popup-text");
+const studentPopupButton = document.getElementById("student-popup-button");
+
+
+rotateButton.addEventListener('click', rotateFlipCard);
+backButton.addEventListener('click', rotateFlipCardBack);
+
+studentPopupButton.addEventListener('click', () =>{
+	studentPopup.style.visibility = "hidden";
+});
 
 // this button will print out a "success" message if all student input fields
 // aren't empty
 studentSubmit.addEventListener('click', () => {
 	let verdict = false;
-	let hasPassword = false
-	let hasUsername = false
-	let hasEmail = false
 	if (studentPassword.value && studentUsername.value) {
-		hasPassword = true;
-		verdict = sendData('http://localhost:3000/api-password', studentPassword.value, studentUsername.value);
-		console.log("Webpage verdict: " + verdict);
+		verdict = sendData('http://localhost:3000/api-student-login', studentPassword.value, studentUsername.value);
+		console.log("Student button pressed: " + verdict);
 	} 
-	if (studentEmail.value) {
-		hasEmail = true
-	}
 	if (verdict === "true") {
 		window.location.href = "./class-select-page.html";
-	} else if (verdict === "Invalid username") {
-		console.log(verdict);
-	} else if (verdict === "Invalid password") {
-		console.log(verdict);
+	} else if (verdict === '"Invalid username"' || verdict === '"Invalid password"') {
+			studentPopup.style.visibility = "visible";
+			studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Invalid username/password.";
+	} else if (!(studentPassword.value && studentUsername.value)) {
+		studentPopup.style.visibility = "visible";
+		studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Please enter a username and a password.";
+	}
+	else {
+		studentPopup.style.visibility = "visible";
+		studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Something went wrong. Please try again.";
 	}
 })
 
-// this button will print out a "success" message if all teacher input fields
-// aren't empty
 teacherSubmit.addEventListener('click', () => {
-	let hasPassword = false
-	let hasEmail = false
-	if (teacherPassword.value) {
-		hasPassword = true
+	let verdict = false;
+	if (teacherPassword.value && teacherEmail.value) {
+		verdict = sendData('http://localhost:3000/api-teacher-login', teacherPassword.value, teacherEmail.value);
+		console.log(verdict);
+	} 
+	if (verdict === "true") {
+		window.location.href = "./class-select-page.html";
+	} else if (verdict === '"Invalid username"' || verdict === '"Invalid password"') {
+			studentPopup.style.visibility = "visible";
+			studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Invalid username/password.";
+	} else if (!(teacherPassword.value && teacherEmail.value)) {
+		studentPopup.style.visibility = "visible";
+		studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Please enter a username and a password.";
 	}
-	if (teacherEmail.value) {
-		hasEmail = true
-	}
-	if (hasPassword && hasEmail) {
-		window.location.href = "/class-select-page.html";
+	else {
+		studentPopup.style.visibility = "visible";
+		studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Something went wrong. Please try again.";
 	}
 })
+
 
 teacherHeader.addEventListener('click', teacherSlideUp);
 
@@ -86,7 +106,6 @@ function teacherSlideUp(e) {
 			studentHeader.parentNode.classList.add('slide-up')
 			parent.classList.remove('slide-up')
 			teacherHeader.removeEventListener('click', teacherSlideUp)
-			studentEmail.value = ''
 			studentPassword.value = ''
 			studentUsername.value = ''
 		}})}
@@ -94,6 +113,7 @@ function teacherSlideUp(e) {
 
 window.onload = function() {
 }
+
 
 function rotateFlipCard() {
 	const flipCardInner = document.getElementById('flipCardInner');

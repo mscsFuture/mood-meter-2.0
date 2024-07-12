@@ -11,67 +11,6 @@ exports.makeConnection =  function() {
   return pool;
 }
 
-exports.getUsername = function(pool) {
-  pool.getConnection(function(err, connection) {
-    if (err) throw err; // not connected!
-  
-    // Use the connection
-    connection.query('SELECT * FROM student', function (error, results, fields) {
-        console.log('The result is: ', results[0]);
-      // When done with the connection, release it.
-      connection.release();
-  
-      // Handle error after the release.
-      if (error) throw error;
-  
-      // Don't use the connection here, it has been returned to the pool.
-    });
-});
-}
-
-// exports.getClassList = async function(pool) {
-//   let classArray = [];
-//   let i = 0;
-//     // For now I will assume that the student is the student with id = 1. This is until I can draw form input from the login page.
-//   const STUDENT_ID = 1;
-//   let idArray = [];
-//     // First, we want to get look at the class assignment table to retrieve all the class IDs whose corresponding student id = 1.
-    // let promise1 = new Promise((resolve, reject) => {
-//         console.log("STARTED CONNECTION");
-//         pool.query(`SELECT class_id FROM class_assignment WHERE user_id=${STUDENT_ID}`, function (error, results, fields) {
-//           if (error) return reject(error);
-//           for (i = 0; i < results.length; i++) {
-//             console.log(results[i]["class_id"]);
-//             idArray[i] = results[i]["class_id"];
-//           }
-//           console.log("Promise resolving");
-//           return resolve("Success");  
-//        });
-//     });
-
-//     await promise1;
-
-///     let promise2 = new Promise((resolve, reject) => {
-//       let completedQueries = 0;
-//       for (i = 0; i < idArray.length; i++) {
-//         pool.query(`SELECT * FROM class WHERE class_id=${idArray[i]}`, function (error, results, fields) {
-//           if (error) return reject(error);
-//           classArray[i] = results;
-//           console.log(classArray[i]);
-//           completedQueries++;
-//           if (completedQueries === idArray.length) {
-//             return resolve("Success");
-//           }
-//       }
-//     );
-//       };
-//     });
-//     await promise2;
-//     console.log(classArray);
-//     console.log("RETURNING CLASS");
-//     return classArray;
-// }
-
 exports.verifyPasswordUsername = async function(pool, passwordUsernameInput) {
   let isCorrectUser = false;
   studentID = -1;
@@ -86,7 +25,7 @@ exports.verifyPasswordUsername = async function(pool, passwordUsernameInput) {
         isCorrectUser = true;
         studentID = 0;
       }
-      return resolve("Success");
+      resolve("Success");
       });
   });
 
@@ -151,4 +90,51 @@ exports.getClassList = async function(pool) {
   // console.log(classArray);
   console.log(classArray);
   return classArray;
+}
+
+
+exports.verifyTeacherPasswordEmail = async function(pool, passwordEmailInput) {
+  console.log("Got here!");
+  let isCorrectUser = false;
+  teacherID = -1;
+  const email = passwordEmailInput.username;
+  const password = passwordEmailInput.password;
+  console.log("Email: " + email + ", password: " + password);
+  
+  let promise1 = new Promise((resolve, reject) => {
+    pool.query(`SELECT teacher_id FROM teachers WHERE email LIKE '${email}'`, function (error, results) {
+      if (error) return reject(error);
+      console.log("These are the email results: " + JSON.stringify(results, null, 2));
+      if (results.length > 0) {
+        isCorrectUser = true;
+        teacherID = 0;
+      }
+      return resolve("Success");
+      });
+  });
+
+  await promise1;
+
+  if (isCorrectUser === true) {
+    let promise2 = new Promise((resolve, reject) => {
+        pool.query(`SELECT password FROM teachers WHERE teacher_id=${teacherID}`, function (error, results) {
+          if (error) return reject(error);
+          console.log(results);
+          console.log(teacherID);
+          if (results[0].password == password) {
+            console.log("Password matches");
+            isCorrectUser = true;
+          } else {
+            isCorrectUser = "Invalid password";
+          }
+          return resolve("Success");
+        });
+    });
+  await promise2;
+} else {
+  isCorrectUser = "Invalid username";
+}
+
+  console.log("RETURNING");
+  return isCorrectUser;
 }
