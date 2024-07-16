@@ -138,3 +138,56 @@ exports.verifyTeacherPasswordEmail = async function(pool, passwordEmailInput) {
   console.log("RETURNING");
   return isCorrectUser;
 }
+
+exports.createTeacherAccount = async function(pool, payload) {
+  let usernameValid = false;
+  let emailValid = false;
+  let accountCreatedSuccessfully = false;
+  const firstName = payload.firstName;
+  const lastName = payload.lastName;
+  const email = payload.email;
+  const username = payload.username;
+  const password = payload.password;
+  console.log(payload);
+
+  let promise1 = new Promise((resolve, reject) => {
+    pool.query(`SELECT teacher_id FROM teachers WHERE username LIKE '${username}'`, function (error, results) {
+      if (error) return reject(error);
+      console.log("These are the teacher_id results: " + JSON.stringify(results, null, 2));
+      if (results.length > 0) {
+        usernameValid = false;
+      } else {
+        usernameValid = true;
+      }
+      return resolve("Success");
+      });
+  });
+  await promise1;
+
+  let promise2 = new Promise((resolve, reject) => {
+    pool.query(`SELECT teacher_id FROM teachers WHERE email LIKE '${email}'`, function (error, results) {
+      if (error) return reject(error);
+      console.log("These are the teacher_id results: " + JSON.stringify(results, null, 2));
+      if (results.length > 0) {
+        emailValid = false;
+      } else {
+        emailValid = true;
+      }
+      return resolve("Success");
+      });
+  });
+  await promise2;
+
+  if (usernameValid && emailValid) {
+    let promise3 = new Promise((resolve, reject) => {
+      pool.query(`INSERT INTO teachers (username, password, email, first_name, last_name) VALUES ('${username}', '${password}', '${email}', '${firstName}', '${lastName}')`, function (error, results) {
+        if (error) return reject(error);
+        console.log(results);
+        accountCreatedSuccessfully = true;
+        return resolve("Success");
+        });
+    });
+    await promise3;
+  }
+  return accountCreatedSuccessfully;
+}

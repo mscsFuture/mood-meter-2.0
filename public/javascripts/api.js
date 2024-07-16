@@ -15,3 +15,12 @@ export function sendData(url, passwordInput, usernameInput) {
   xmlHttp.send(payload);
   return xmlHttp.responseText;
 }
+
+export function sendDataAlt(url, payload) {
+  let xmlHttp = new XMLHttpRequest();
+  xmlHttp.open( "POST", url, false);
+  xmlHttp.setRequestHeader("Content-Type", "application/json");
+  console.log("Got to api");
+  xmlHttp.send(payload);
+  return xmlHttp.responseText;
+}

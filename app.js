@@ -39,6 +39,13 @@ app.post("/api-teacher-login", async (req, res) => {
   res.send(JSON.stringify(verdict));
 });
 
+app.post("/api-create-teacher-account", async (req, res) => {
+  console.log("Got to app");
+  // console.log('Payload is: ' + JSON.stringify(req.body, null, 2));
+  const verdict = await server.createTeacherAccount(pool, req.body);
+  res.send(JSON.stringify(verdict));
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

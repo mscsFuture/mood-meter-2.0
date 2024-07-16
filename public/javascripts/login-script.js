@@ -1,4 +1,5 @@
 import { sendData } from "./api.js";
+import { sendDataAlt } from "./api.js";
 console.clear();
 
 const teacherHeader = document.getElementById('teacher-login');
@@ -124,3 +125,25 @@ function rotateFlipCardBack() {
 	const flipCardInner = document.getElementById('flipCardInner');
 	flipCardInner.style.transform = "rotateY(0deg)";
 }
+
+
+const firstName = document.getElementById('firstname-input');
+const lastName = document.getElementById('lastname-input');
+const newEmail = document.getElementById('email-input');
+const newUsername = document.getElementById('signup-username-input');
+const newPassword = document.getElementById('signup-password-input');
+const confirmPassword = document.getElementById('confirm-password-input');
+const createTeacherButton = document.getElementById('create-teacher-button');
+
+createTeacherButton.addEventListener('click', () => {
+	if (!(newPassword.value === confirmPassword.value)) {
+		studentPopup.style.visibility = "visible";
+		studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>The two passwords entered are not the same.";
+	} else {
+		const payload = `{"firstName": "${firstName.value}", "lastName": "${lastName.value}", "email": "${newEmail.value}", "username": "${newUsername.value}", "password": "${newPassword.value}"}`
+		let verdict = sendDataAlt("/api-create-teacher-account", payload);
+		console.log("Create account button pressed: " + verdict);
+	}
+});
+
+
