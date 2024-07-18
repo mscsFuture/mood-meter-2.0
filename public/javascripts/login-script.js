@@ -30,15 +30,15 @@ studentPopupButton.addEventListener('click', () =>{
 
 
 studentSubmit.addEventListener('click', () => {
-	let response = {};
+	let response = "";
 	if (studentPassword.value && studentUsername.value) {
-		response = JSON.parse(sendData('http://localhost:3000/login-page/student-login', studentPassword.value, studentUsername.value));
-		console.log("Student button pressed: " + response.verdict);
-		console.log(response.key);
+		response = sendData('http://localhost:3000/login-page/student-login', studentPassword.value, studentUsername.value);
+		console.log("Student button pressed: " + response);
+		console.log(response);
 	} 
-	if (response.verdict == "true") {
+	if (response == "true") {
 		window.location.href = "./class-select-page.html";
-	} else if (response.verdict === '"Invalid username"' || response.verdict === '"Invalid password"') {
+	} else if (response === '"Invalid username"' || response === '"Invalid password"') {
 			studentPopup.style.visibility = "visible";
 			studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Invalid username/password.";
 	} else if (!(studentPassword.value && studentUsername.value)) {

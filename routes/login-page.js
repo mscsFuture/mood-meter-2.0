@@ -4,16 +4,10 @@ let server = require("../server");
 const app = require("../app");
 
 router.post("/student-login", async (req, res) => {
-  const key = "";
-  const response = {
-    "key": "",
-    "verdict": "",
-  }
   let pool = app.getPool();
   console.log('Payload is: ' + JSON.stringify(req.body, null, 2));
-  response.verdict = await server.verifyPasswordUsername(pool, req.body);
-  if (response.verdict == true) {
-    response.key = "632FDG43467SDFSD.FDW21##";
+  let response = await server.verifyPasswordUsername(pool, req.body);
+  if (response == true) {
   } 
   res.send(JSON.stringify(response));
 });
