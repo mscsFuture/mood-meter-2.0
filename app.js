@@ -6,13 +6,19 @@ var logger = require('morgan');
 
 var app = express();
 app.set("view engine", "ejs");
+app.set('views', path.join(__dirname, 'views'));
 
+expressSession = require('express-session')
+app.use(expressSession({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(express.static(path.join(__dirname, "public")));
 
 
 let server = require("./server");
@@ -29,6 +35,9 @@ exports.getPool = function() {
   return pool;
 }
 
+app.get('/', (req, res) => {
+  res.redirect('login-page');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -36,8 +36,9 @@ studentSubmit.addEventListener('click', () => {
 		console.log("Student button pressed: " + response);
 		console.log(response);
 	} 
+	// window.location.href = `${response}`;
 	if (response == "true") {
-		window.location.href = "./class-select-page.html";
+		window.location.href = "./class-select";
 	} else if (response === '"Invalid username"' || response === '"Invalid password"') {
 			studentPopup.style.visibility = "visible";
 			studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Invalid username/password.";
@@ -58,7 +59,7 @@ teacherSubmit.addEventListener('click', () => {
 		console.log(verdict);
 	} 
 	if (verdict === "true") {
-		window.location.href = "./class-select-page.html";
+		window.location.href = "./class-select";
 	} else if (verdict === '"Invalid username"' || verdict === '"Invalid password"') {
 			studentPopup.style.visibility = "visible";
 			studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Invalid username/password.";

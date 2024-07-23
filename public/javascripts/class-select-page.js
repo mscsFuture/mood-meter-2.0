@@ -1,4 +1,4 @@
-import { getClasses } from "./api.js";
+import { getClasses } from "/javascripts/api.js";
 // these lastAccessDates are placeholders until we can actually insert this info into the database
 const lastAccessDate = ["June 5, 1924", "May 21, 1924", "June 7, 1924", "June 1, 1924", "April 25, 1924"];
 const nextAccessDate = ["June 12, 1924", "June 12, 1924", "June 15, 1924", "June 13, 1924", "July 4, 1924"];
@@ -7,7 +7,7 @@ const nextAccessDate = ["June 12, 1924", "June 12, 1924", "June 15, 1924", "June
 
 let i = 0;
 // getClasses fetches from the database all info about each class that the current user is enrolled in. It returns an array of arrays(?) of JSONs
-let data = getClasses('http://localhost:3000/class-select');
+let data = getClasses('http://localhost:3000/class-select/get-classes');
 console.log(data);
 const classNum = data.length;
 // classInfoArray will contain one or more dictionary objects, each of which will contain the name, mood type, and icon of each class the user is enrolled in
