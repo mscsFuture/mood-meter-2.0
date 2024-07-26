@@ -26,12 +26,13 @@ router.post("/student-login", async (req, res) => {
 router.post("/teacher-login", async (req, res) => {
   let pool = app.getPool();
   // console.log('Payload is: ' + JSON.stringify(req.body, null, 2));
-  const verdict = await server.verifyTeacherPasswordEmail(pool, req.body);
-  if (verdict == true) {
+  const response = await server.verifyTeacherPasswordEmail(pool, req.body);
+  if (response.result == "true") {
     req.session.loggedin = true;
-    res.send(JSON.stringify(verdict));
+    req.session.username = response.id;
+    res.send(JSON.stringify(response));
   } else {
-    res.send(JSON.stringify(verdict));
+    res.send(JSON.stringify(response));
   }
 });
 

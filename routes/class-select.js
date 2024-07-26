@@ -12,6 +12,7 @@ router.get('/get-classes', async (req, res) => {
 
 // This get method will run whenever the user enters the "/class-select" url.
 router.get('/', (req, res) => {
+	console.log(req.session.loggedin);
   if (req.session.loggedin) {
 		res.render('class-select-page');
 	} else {

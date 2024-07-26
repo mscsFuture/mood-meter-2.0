@@ -97,19 +97,19 @@ exports.getClassList = async function(pool, studentID) {
 
 
 exports.verifyTeacherPasswordEmail = async function(pool, passwordEmailInput) {
-  console.log("Got here!");
-  let isCorrectUser = false;
+  let response = {
+    "result": "false",
+    "id": -1,
+  }
   teacherID = -1;
   const email = passwordEmailInput.username;
   const password = passwordEmailInput.password;
-  console.log("Email: " + email + ", password: " + password);
   
   let promise1 = new Promise((resolve, reject) => {
     pool.query(`SELECT teacher_id FROM teachers WHERE email LIKE '${email}'`, function (error, results) {
       if (error) return reject(error);
-      console.log("These are the email results: " + JSON.stringify(results, null, 2));
       if (results.length > 0) {
-        isCorrectUser = true;
+        response.result = "true";
         teacherID = 1;
       }
       return resolve("Success");
@@ -118,29 +118,25 @@ exports.verifyTeacherPasswordEmail = async function(pool, passwordEmailInput) {
 
   await promise1;
 
-  if (isCorrectUser === true) {
+  if (response.result == "true") {
     let promise2 = new Promise((resolve, reject) => {
         pool.query(`SELECT password FROM teachers WHERE teacher_id=${teacherID}`, function (error, results) {
           if (error) return reject(error);
-          console.log(results)
-          console.log(results.length);
-          console.log(teacherID);
             if (results[0].password === password) {
-              console.log("Password matches");
-              isCorrectUser = true;
+              response.result = "true";
             } else {
-            isCorrectUser = "Invalid password";
+            response.result = "Invalid password";
           }
           return resolve("Success");
         });
     });
   await promise2;
 } else {
-  isCorrectUser = "Invalid username";
+  response.result = "Invalid username";
 }
-
+  response.id = teacherID;
   console.log("RETURNING");
-  return isCorrectUser;
+  return response;
 }
 
 exports.createTeacherAccount = async function(pool, payload) {

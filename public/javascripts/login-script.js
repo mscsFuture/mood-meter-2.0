@@ -37,7 +37,7 @@ studentSubmit.addEventListener('click', () => {
 	}
 	if (response.result == "true") {
 		window.location.href = `./class-select`;
-	} else if (response.result === '"Invalid username"' || response === '"Invalid password"') {
+	} else if (response.result == '"Invalid username"' || response == '"Invalid password"') {
 			studentPopup.style.visibility = "visible";
 			studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Invalid username/password.";
 	} else if (!(studentPassword.value && studentUsername.value)) {
@@ -51,14 +51,14 @@ studentSubmit.addEventListener('click', () => {
 });
 
 teacherSubmit.addEventListener('click', () => {
-	let verdict = false;
+	let response = "";
 	if (teacherPassword.value && teacherEmail.value) {
-		verdict = sendData('http://localhost:3000/login-page/teacher-login', teacherPassword.value, teacherEmail.value);
-		console.log(verdict);
+		response = sendData('http://localhost:3000/login-page/teacher-login', teacherPassword.value, teacherEmail.value);
+		console.log(response);
 	} 
-	if (verdict === "true") {
+	if (response.result == "true") {
 		window.location.href = "./class-select";
-	} else if (verdict === '"Invalid username"' || verdict === '"Invalid password"') {
+	} else if (response.result === '"Invalid username"' || response.result === '"Invalid password"') {
 			studentPopup.style.visibility = "visible";
 			studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Invalid username/password.";
 	} else if (!(teacherPassword.value && teacherEmail.value)) {
