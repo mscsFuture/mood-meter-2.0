@@ -3,25 +3,21 @@ var router = express.Router();
 let server = require("../server");
 const app = require("../app");
 
-router.get('', (req, res) => {
-  // res.sendFile('C:/Users/Ben Fenelon/OneDrive/Documents/GitHub/mood-meter-4.0/views/class-select-page.ejs');
-  // res.render('class-select-page');
-
-  if (req.session.loggedin) {
-    console.log("Logged in");
-		res.render('class-select-page');
-	} else { 
-    console.log("Not logged in");
-		res.redirect('login-page');
-	}
-	res.end();
+// This get method will run whenever the user enters the "/class-select/get-classes" url.
+router.get('/get-classes', async (req, res) => {
+  let pool = app.getPool();
+  let classList = await server.getClassList(pool, req.session.username);
+  res.status(200).json(classList);
 });
 
-router.get('/get-classes', async (req, res) => {
-  console.log("Got here");
-  let pool = app.getPool();
-  let classList = await server.getClassList(pool);
-  res.status(200).json(classList);
+// This get method will run whenever the user enters the "/class-select" url.
+router.get('/', (req, res) => {
+  if (req.session.loggedin) {
+		res.render('class-select-page');
+	} else {
+		res.redirect('/login-page');
+	}
+	res.end();
 });
 
 

@@ -98,7 +98,7 @@ html,body {
 		background-repeat: no-repeat;
 		background-position: left top;
 		background-size: 500px;
-		background-image: url('/images/student.png');
+		background-image: url('/assets/student.png');
 	}
 	
 	.student-login {

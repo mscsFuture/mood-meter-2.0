@@ -12,18 +12,21 @@ exports.makeConnection =  function() {
 }
 
 exports.verifyPasswordUsername = async function(pool, passwordUsernameInput) {
-  let isCorrectUser = false;
-  studentID = -1;
+  // let isCorrectUser = false;
   username = passwordUsernameInput.username;
   password = passwordUsernameInput.password;
-  
+  let studentID = 0;
+  let response = {
+    "result": "false",
+    "id": -1,
+  }
   let promise1 = new Promise((resolve, reject) => {
     pool.query(`SELECT student_id FROM student WHERE username LIKE '${username}'`, function (error, results, fields) {
       if (error) return reject(error);
       console.log("These are the username results: " + JSON.stringify(results, null, 2));
       if (results.length > 0) {
-        isCorrectUser = true;
-        studentID = 0;
+        response.result = true;
+        studentID = results[0].student_id;
       }
       resolve("Success");
       });
@@ -31,37 +34,37 @@ exports.verifyPasswordUsername = async function(pool, passwordUsernameInput) {
 
   await promise1;
 
-  if (isCorrectUser === true) {
+  if (response.result === true) {
     let promise2 = new Promise((resolve, reject) => {
         pool.query(`SELECT password FROM student WHERE student_id=${studentID}`, function (error, results, fields) {
           if (error) return reject(error);
           console.log("Got here!");
           if (results[0].password == password) {
-            isCorrectUser = true;
+            response.result = "true";
+            response.id = studentID;
           } else {
-            isCorrectUser = "Invalid password";
+            response.result = "Invalid password";
           }
           resolve("Success");
         });
     });
   await promise2;
 } else {
-  isCorrectUser = "Invalid username";
+  response.result = "Invalid username";
 }
 
   console.log("RETURNING");
-  return isCorrectUser;
+  return response;
 }
 
 
-exports.getClassList = async function(pool) {
+exports.getClassList = async function(pool, studentID) {
   let classArray = [];
   let i = 0;
-  const STUDENT_ID = 1;
   let idArray = [];
 
   let promise1 = new Promise((resolve, reject) => {
-    pool.query(`SELECT class_id FROM class_assignment WHERE user_id=${STUDENT_ID}`, function (error, results, fields) {
+    pool.query(`SELECT class_id FROM class_assignment WHERE user_id=${studentID}`, function (error, results, fields) {
       if (error) return reject(error);
       for (i = 0; i < results.length; i++) {
         console.log(results[i]["class_id"]);
@@ -88,7 +91,7 @@ exports.getClassList = async function(pool) {
   }
 
   // console.log(classArray);
-  console.log(classArray);
+  // console.log(classArray);
   return classArray;
 }
 

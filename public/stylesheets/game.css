@@ -76,8 +76,8 @@ body {
 	display: grid;
 	margin:4px;
 	gap: 4px;
-	height: calc(100% - 8px);
-	width: calc(100% - 8px);
+	height: calc(50% - 8px);
+	width: calc(50% - 8px);
 	background-color:black;
 	grid-template-rows: repeat(var(--grid-rows), 1fr);
 	grid-template-columns: repeat(var(--grid-cols), 1fr);
@@ -95,7 +95,7 @@ body {
 
 @font-face {
 	font-family:'RobotoCondensed-Bold';
-	src: url('fonts/roboto-condensed/RobotoCondensed-Bold.ttf');
+	src: url('../fonts/roboto-condensed/RobotoCondensed-Bold.ttf');
 }
 
 .mini-grid-cell-text {
@@ -114,12 +114,12 @@ body {
 
 @font-face {
 	font-family:'Steelfish';
-	src: url('fonts/steelfish/steelfish rg.otf');
+	src: url('../fonts/steelfish/steelfish rg.otf');
 }
 
 @font-face {
 	font-family:'Univers';
-	src: url('fonts/univers-condensed/universcondensed_bold.ttf');
+	src: url('../fonts/univers-condensed/universcondensed_bold.ttf');
 }
 
 .maxi-grid-cell {

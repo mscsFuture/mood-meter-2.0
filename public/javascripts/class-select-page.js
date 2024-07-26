@@ -35,6 +35,10 @@ for (let i = 0; i < classNum; i++) {
   let classOption = document.createElement("div");
   classOption.classList.add('class-option');
   classOption.style.backgroundImage = 'url(' + classInfoArray[i].icon + ')';
+  classOption.addEventListener('click', () => {
+    window.location.href = `/game`;
+  });
+  
   classOptionGrid.appendChild(classOption);
   
   let classTitle = document.createElement("div");
@@ -43,3 +47,4 @@ for (let i = 0; i < classNum; i++) {
 
   classOption.appendChild(classTitle);
 }
+

@@ -13,7 +13,7 @@ export function sendData(url, passwordInput, usernameInput) {
   xmlHttp.open( "POST", url, false);
   xmlHttp.setRequestHeader("Content-Type", "application/json");
   xmlHttp.send(payload);
-  return xmlHttp.responseText;
+  return JSON.parse(xmlHttp.responseText);
 }
 
 export function sendDataAlt(url, payload) {

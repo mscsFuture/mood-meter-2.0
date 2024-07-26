@@ -42,7 +42,9 @@ function buildMoodMiniGrid() {
 
 		let cellImage = document.createElement("div");
 		cellImage.classList.add("mini-grid-cell-image");
-		cellImage.style.backgroundImage = "url(assets/emoticons/" + moodMiniImageMappings[c] + ")";
+		if (moodMiniImageMappings[c] != "") {
+			cellImage.style.backgroundImage = "url(../assets/emoticons/" + moodMiniImageMappings[c] + ")";
+		}
 		// console.log("No Image");
 		
 		cell.appendChild(cellText);

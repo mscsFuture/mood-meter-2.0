@@ -34,12 +34,10 @@ studentSubmit.addEventListener('click', () => {
 	if (studentPassword.value && studentUsername.value) {
 		response = sendData('http://localhost:3000/login-page/student-login', studentPassword.value, studentUsername.value);
 		console.log("Student button pressed: " + response);
-		console.log(response);
-	} 
-	// window.location.href = `${response}`;
-	if (response == "true") {
-		window.location.href = "./class-select";
-	} else if (response === '"Invalid username"' || response === '"Invalid password"') {
+	}
+	if (response.result == "true") {
+		window.location.href = `./class-select`;
+	} else if (response.result === '"Invalid username"' || response === '"Invalid password"') {
 			studentPopup.style.visibility = "visible";
 			studentPopupText.innerHTML = "<b>future.mu.edu says</b><br>Invalid username/password.";
 	} else if (!(studentPassword.value && studentUsername.value)) {
