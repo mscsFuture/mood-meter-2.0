@@ -139,7 +139,7 @@ exports.verifyTeacherPasswordEmail = async function(pool, passwordEmailInput) {
   return response;
 }
 
-exports.createTeacherAccount = async function(pool, payload) {
+exports.createTeacherAccount = async function(pool, payload, userID) {
   let usernameValid = false;
   let emailValid = false;
   let accountCreatedSuccessfully = false;
@@ -196,7 +196,96 @@ exports.createTeacherAccount = async function(pool, payload) {
   return accountCreatedSuccessfully;
 }
 
+// WARNING: THERE IS A POSSIBILITY THAT THE USE OF MAX IN THIS FUNCTION CAN CAUSE ERRORS IN CERTAIN EDGE CASES
+exports.createClass = async function(pool, payload, teacherID) {
+  let classCreatedSuccessfully = false;
+  console.log(payload);
+  const className = payload.className;
+  const description = payload.description;
+  const moodType = payload.moodType;
+  // console.log(payload);
+  let classID = -1;
+
+    let promise1 = new Promise((resolve, reject) => {
+      pool.query(`INSERT INTO class (class_name, class_description, mood_type, icon) VALUES ('${className}', '${description}', '${moodType}', '/assets/class-logo${(className.length % 3)+1}.webp')`, function (error, results) {
+        if (error) return reject(error);
+        // console.log("These are the classCreate results: " + JSON.stringify(results, null, 2));
+        return resolve("Success");
+        });
+    });
+    await promise1;
+
+    let promise2 = new Promise((resolve, reject) => {
+      pool.query(`SELECT Max(class_id) from class`, function (error, results) {
+        if (error) return reject(error);
+        // console.log(results);
+        // console.log(results[0]["Max(class_id)"]);
+        classID = results[0]["Max(class_id)"];
+        // console.log("Promise resolving");
+        resolve("Success");
+      });
+    });
+    await promise2;
+
+    console.log(classID);
+    let promise3 = new Promise((resolve, reject) => {
+      pool.query(`INSERT INTO class_assignment (user_id, class_id, \`group\`) VALUES ('${teacherID}', '${classID}', '${1}')`, function (error, results) {
+        if (error) return reject(error);
+        // console.log("These are the class_assignment results: " + JSON.stringify(results, null, 2));
+        classCreatedSuccessfully = true;
+        return resolve("Success");
+        });
+    });
+    await promise3;
+
+
+  return classCreatedSuccessfully;
+}
+
+// NOTE: THIS METHOD WILL ONLY WORK IF CLASS NAMES ARE UNIQUE REGARDLESS OF TEACHER
+exports.deleteClass = async function(pool, payload, teacherID) {
+  let classDeletedSuccessfully = false;
+  console.log(payload);
+  const className = payload.className;
+  let classIDs = {};
+
+  let promise1 = new Promise((resolve, reject) => {
+    pool.query(`SELECT class_id from class WHERE class_name LIKE '${className}'`, function (error, results) {
+      if (error) return reject(error);
+      classIDs = results[0]["class_id"];
+      resolve("Success");
+    });
+  });
+  await promise1;
+  console.log("classID = :");
+  console.log(classIDs);
+
+  let promise2 = new Promise((resolve, reject) => {
+    pool.query(`DELETE FROM class WHERE class_id=${classIDs}`, function (error, results) {
+      if (error) return reject(error);
+      // console.log("These are the class_assignment results: " + JSON.stringify(results, null, 2));
+      return resolve("Success");
+      });
+  });
+  await promise2;
+
+  let promise3 = new Promise((resolve, reject) => {
+    pool.query(`DELETE FROM class_assignment WHERE class_id=${classIDs}`, function (error, results) {
+      if (error) return reject(error);
+      // console.log("These are the class_assignment results: " + JSON.stringify(results, null, 2));
+      classDeletedSuccessfully = true;
+      return resolve("Success");
+      });
+  });
+  await promise3;
+
+
+  return classDeletedSuccessfully;
+}
+
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
+
+

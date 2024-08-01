@@ -10,6 +10,16 @@ router.get('/get-classes', async (req, res) => {
   res.status(200).json(classList);
 });
 
+router.get('/teacher', (req, res) => {
+	console.log(req.session.loggedin);
+  if (req.session.loggedin) {
+		res.render('class-select-teacher');
+	} else {
+		res.redirect('/login-page');
+	}
+	res.end();
+});
+
 // This get method will run whenever the user enters the "/class-select" url.
 router.get('/', (req, res) => {
 	console.log(req.session.loggedin);
@@ -21,5 +31,24 @@ router.get('/', (req, res) => {
 	res.end();
 });
 
+router.post("/create-class", async (req, res) => {
+  let pool = app.getPool();
+  let response = await server.createClass(pool, req.body, req.session.username);
+  if (response == "true") {
+    res.send(JSON.stringify(response));
+  } else {
+   res.send(JSON.stringify(response));
+  }
+});
+
+router.post("/delete-class", async (req, res) => {
+  let pool = app.getPool();
+  let response = await server.deleteClass(pool, req.body, req.session.username);
+  if (response == "true") {
+    res.send(JSON.stringify(response));
+  } else {
+   res.send(JSON.stringify(response));
+  }
+});
 
 module.exports = router;

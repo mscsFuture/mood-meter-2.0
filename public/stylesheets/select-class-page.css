@@ -1,25 +1,42 @@
+.class-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
 .header {
   font-size: 30px;
   font-weight: bold;
-  margin-left: 35%;
-  margin-right: 37%;
+  display:inline;
+}
+
+.header-link {
+  cursor:pointer;
+  color:blue;
+  text-decoration:underline;
+  font-size: 30px;
+  font-weight: bold;
+  /* margin-left: 40%; */
 }
 
 .content {
-  margin-left: 25%;
-  margin-right: 25%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
+
 
 .class-option-grid {
   display: grid;
-  width: 100%;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
   row-gap: 10px;
 }
 
 .class-title {
   word-wrap: break-word;
-  max-width: 100%;
-  font-size: 20px;
+  max-width: auto;
+  font-size: 17px;
   margin-left: 45%;
   margin-top: 1%;
   line-height: 50px;
@@ -32,7 +49,7 @@
   border-width: 2px;
   box-shadow: 1.5px .5px 1.5px rgb(77, 76, 76);
   visibility: visible;
-  height: 280px;
+  height: 260px;
   background-repeat: no-repeat;
   background-position: left;
   background-size: 40% 100%;

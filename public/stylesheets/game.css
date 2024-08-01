@@ -76,8 +76,8 @@ body {
 	display: grid;
 	margin:4px;
 	gap: 4px;
-	height: calc(50% - 8px);
-	width: calc(50% - 8px);
+	height: calc(100% - 8px);
+	width: calc(100% - 8px);
 	background-color:black;
 	grid-template-rows: repeat(var(--grid-rows), 1fr);
 	grid-template-columns: repeat(var(--grid-cols), 1fr);

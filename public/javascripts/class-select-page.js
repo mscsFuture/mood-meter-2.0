@@ -1,4 +1,5 @@
 import { getClasses } from "/javascripts/api.js";
+
 // these lastAccessDates are placeholders until we can actually insert this info into the database
 const lastAccessDate = ["June 5, 1924", "May 21, 1924", "June 7, 1924", "June 1, 1924", "April 25, 1924"];
 const nextAccessDate = ["June 12, 1924", "June 12, 1924", "June 15, 1924", "June 13, 1924", "July 4, 1924"];
@@ -47,4 +48,3 @@ for (let i = 0; i < classNum; i++) {
 
   classOption.appendChild(classTitle);
 }
-

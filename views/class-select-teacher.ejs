@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mood Meter Class Select Page</title>
+  <link rel="stylesheet" href="/stylesheets/teacher-class-select-page.css">
+</head>
+<body>
+  
+  <div class="form-popup" id="formID">
+    <h1>Create Class</h1>
+    <label for="name"><b>Class name</b></label>
+    <input type="text" placeholder="Enter Class Name" id="className" required>
+
+    <label for="description"><b>Class description</b></label>
+    <input type="text" placeholder="Enter Class Description" id="classDesc" required>
+
+    <select id="classType">
+      <option value=0>Mood Meter</option>
+      <option value=1 selected>Mood Junior</option>
+    </select>
+
+    <button type="submit" class="btn" id="submitButton">Add Class</button>
+    <button type="button" class="btn cancel" id="cancelButton">Cancel</button>
+  </div>
+
+  <div class="action-popup" id="actionPopup">
+    <p id="action-header"></p>
+    <div class="action-choice">
+      <img class="icon" src="/assets/person-icon.png">
+      <div class="action-link" id="addStudent">Add student to class</div>
+    </div>
+    <div class="action-choice">
+      <img class="icon" src="/assets/delete-icon.png">
+      <div class="action-link action-delete" id="deleteClass">Delete class</div>
+    </div>
+    <div class="action-choice">
+      <img class="icon" src="/assets/cancel-icon.png">
+      <div class="action-link" id="cancelAction">Cancel</div>
+    </div>
+  </div>
+
+  <div class="content" id="contentID">
+    <div class="class-row">
+      <div class="header">Select a class</div>
+      <a class="header-link" id="create-class-link">Create a new class</a>
+    </div>
+    <div class="class-option-grid" id="class-option-grid">
+    </div>
+  </div>
+  <script type="module" src="/javascripts/teacher-class-select-page.js"></script>
+</body>
+</html>

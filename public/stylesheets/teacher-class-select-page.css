@@ -1,0 +1,169 @@
+.class-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.header {
+  font-size: 30px;
+  font-weight: bold;
+  display:inline;
+}
+
+.header-link {
+  cursor:pointer;
+  color:blue;
+  text-decoration:underline;
+  font-size: 30px;
+  font-weight: bold;
+  /* margin-left: 40%; */
+}
+
+.content {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+
+/* The popup form - hidden by default */
+.form-popup {
+  /* display: none; */
+  visibility: hidden;
+  position: fixed;
+  margin-left: 33%;
+  max-width: 600px;
+  /* bottom: 0; */
+  /* right: 15px; */
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-popup input[type=text], .form-container input[type=password] {
+  width: 95%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-popup input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-popup .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:5px;
+  opacity: 0.8;
+  margin-top:15px;
+}
+
+/* Add a red background color to the cancel button */
+.form-popup .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-popup .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+.action-popup {
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  margin-left: 35%;
+  border-radius: 5px;
+  width: 14%;
+  height: 200px;
+  border: 3px solid #f1f1f1;
+  z-index: 10;
+  padding: 10px;
+  background-color: white;
+}
+
+.action-choice {
+  align-items: center;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 60px;
+  color: white;
+  font-size: 17px;
+}
+.icon {
+  height: 25px;
+  margin-right: 12px;
+}
+.action-link {
+  color: blue;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.action-link:hover {
+  color: rgb(0, 0, 221);
+}
+.action-link:active {
+  color: rgb(0, 0, 139);
+}
+.action-delete {
+  color: red;
+}
+.action-delete:hover {
+  color: rgb(204, 1, 1);
+}
+.action-delete:active {
+  color: rgb(133, 0, 0);
+}
+
+
+.class-option-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
+.class-title {
+  word-wrap: break-word;
+  max-width: auto;
+  font-size: 17px;
+  margin-left: 45%;
+  margin-top: 1%;
+  line-height: 50px;
+}
+
+.class-option {
+  border: solid;
+  border-color: rgb(229, 229, 229);
+  border-radius: 5px;
+  border-width: 2px;
+  box-shadow: 1.5px .5px 1.5px rgb(77, 76, 76);
+  visibility: visible;
+  height: 260px;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: 40% 100%;
+}
+
+.class-option:hover {
+  border-color: rgb(191, 191, 191);
+}
+
+.class-option:active {
+  border-color: rgb(134, 133, 133);
+}
