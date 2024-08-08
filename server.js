@@ -58,6 +58,58 @@ exports.verifyPasswordUsername = async function(pool, passwordUsernameInput) {
 }
 
 
+exports.getStudentList = async function(pool, className) {
+  let studentIDArray = [];
+  let i = 0;
+  let idArray = [];
+  let studentInfoArray = [];
+
+  let promise1 = new Promise((resolve, reject) => {
+    pool.query(`SELECT class_id FROM class_assignment WHERE class_name=${className}`, function (error, results, fields) {
+      if (error) return reject(error);
+      console.log("Promise1 worked");
+      for (i = 0; i < results.length; i++) {
+        console.log(results[i]["class_id"]);
+        idArray[i] = results[i]["class_id"];
+      }
+      console.log("Promise resolving");
+      resolve("Success");
+    });
+  });
+
+  await promise1;
+
+  for (i = 0; i < idArray.length; i++) {
+
+    let promise2 = new Promise((resolve, reject) => {
+      pool.query(`SELECT user_id FROM class_assignment WHERE class_id=${idArray[i]}`, function (error, results, fields) {
+        if (error) return reject(error);
+        studentIDArray[i] = results;
+        // console.log(classArray[i]);
+        resolve("Success");
+    });
+    });
+    await promise2;
+  }
+
+  for (i = 0; i < studentIDArray.length; i++) {
+
+    let promise3 = new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM student WHERE student_id=${studentIDArray[i]}`, function (error, results, fields) {
+        if (error) return reject(error);
+        studentInfoArray[i] = results;
+        console.log(studentInfoArray[i]);
+        resolve("Success");
+    });
+    });
+    await promise3;
+  }
+
+  // console.log(classArray);
+  // console.log(classArray);
+  return studentInfoArray;
+}
+
 exports.getClassList = async function(pool, studentID) {
   let classArray = [];
   let i = 0;
@@ -243,7 +295,7 @@ exports.createClass = async function(pool, payload, teacherID) {
 }
 
 // NOTE: THIS METHOD WILL ONLY WORK IF CLASS NAMES ARE UNIQUE REGARDLESS OF TEACHER
-exports.deleteClass = async function(pool, payload, teacherID) {
+exports.deleteClass = async function(pool, payload) {
   let classDeletedSuccessfully = false;
   console.log(payload);
   const className = payload.className;
@@ -261,7 +313,7 @@ exports.deleteClass = async function(pool, payload, teacherID) {
   console.log(classIDs);
 
   let promise2 = new Promise((resolve, reject) => {
-    pool.query(`DELETE FROM class WHERE class_id=${classIDs}`, function (error, results) {
+    pool.query(`DELETE FROM class WHERE class_id=${classIDs}`, function (error) {
       if (error) return reject(error);
       // console.log("These are the class_assignment results: " + JSON.stringify(results, null, 2));
       return resolve("Success");

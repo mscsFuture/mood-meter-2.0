@@ -1,3 +1,72 @@
+/* .body {
+  font-family: sans-serif;
+} */
+
+.add-student-container {
+  /* max-width: 800px; */
+  margin: auto;
+  position: absolute;
+  margin-left: 25%;
+  margin-top: 30px;
+  height: 300px;
+  width: 750px;
+  background-color: white;
+  z-index: 12;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 30px;
+  font-size: 20px;
+  text-align: left;
+}
+
+th {
+  background-color: #e0e0e0;
+}
+
+td.delete-column {
+  border: none;
+  padding: 0;
+  width: 1%;
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+#addStudentBtn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.deleteBtn {
+  padding-left: 10px;
+  color: red;
+  cursor: pointer;
+}
+
+.highlight-empty {
+  border: 2px solid red;
+}
+
+
+
+
+
+
+
+
 .class-row {
   display: flex;
   justify-content: space-between;

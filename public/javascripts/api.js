@@ -6,6 +6,13 @@ export function getClasses(url) {
   return (JSON.parse(xmlHttp.responseText));
 }
 
+export function getData(url, payload) {
+  let xmlHttp = new XMLHttpRequest();
+  xmlHttp.open( "GET", url, false);
+  xmlHttp.send( payload );
+  return (JSON.parse(xmlHttp.responseText));
+}
+
 export function sendData(url, payload) {
   let xmlHttp = new XMLHttpRequest();
   xmlHttp.open( "POST", url, false);

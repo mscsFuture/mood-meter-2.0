@@ -1,0 +1,233 @@
+:root {
+	--grid-cols: 0; /* This will be set to the correct number in game.js */
+	--grid-rows: 0; /* This will be set to the correct number in game.js */
+}
+
+.header-container-wrapper {
+	position: relative;
+	height: 10%;
+	width: 100%;
+	background-color: black;
+}
+
+.header-container {
+	display: flex;
+	align-items: center;
+	/* justify-content: center; */
+	
+	position:absolute;
+	top: 1px;
+	bottom: 2px;
+	margin-top: 2px;
+	margin-right: 4px;
+	margin-left: 4px;
+	height: calc(100% - 2px);
+	width: calc(100% - 8px);
+	/* background-color: rgb(102, 169, 86); */
+	background-color: rgb(112, 110, 117);
+}
+
+body {
+  	display:flex;
+  	flex-direction:column;
+  	margin: 0;
+  	padding: 0;
+  	height: 100vh;
+  	width:100vw;
+	background-color:black;
+}
+
+.game-container {
+  	height: 90%;
+  	width: 100vw;
+  	display: flex;
+  	flex-direction: row;
+  	background-color:whitesmoke;
+}
+
+.blockly-container-wrapper {
+	height: 100%;
+	width: 30%;
+	background-color:black;
+}
+
+.blockly-container {
+	position: relative;
+	min-height: calc(100% - 4px);
+	width: calc(100% - 4px);
+	margin: 4px;
+}
+
+#blocklyDiv {
+	position:absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+}
+
+.grid-container-wrapper {
+	width: 70%;
+	height:fit-content;
+	background-color:black;
+}
+
+.grid-container {
+	display: grid;
+	margin:4px;
+	gap: 4px;
+	height: calc(100% - 8px);
+	width: calc(100% - 8px);
+	background-color:black;
+	grid-template-rows: repeat(var(--grid-rows), 1fr);
+	grid-template-columns: repeat(var(--grid-cols), 1fr);
+  }
+
+.mini-grid-cell {
+	position: relative;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	background-size: contain;
+	aspect-ratio: 1;
+	flex-direction: column;
+}
+
+@font-face {
+	font-family:'RobotoCondensed-Bold';
+	src: url('fonts/roboto-condensed/RobotoCondensed-Bold.ttf');
+}
+
+.mini-grid-cell-text {
+	display:flex;
+	text-align:center;
+	font-size: 1.25em;
+	font-family:'RobotoCondensed-Bold','Comic Sans MS', monospace;
+	margin-bottom: 10px;
+}
+
+.mini-grid-cell-image {
+	height: 50%;
+	width: 50%;
+	background-size: contain;
+}
+
+@font-face {
+	font-family:'Steelfish';
+	src: url('fonts/steelfish/steelfish rg.otf');
+}
+
+@font-face {
+	font-family:'Univers';
+	src: url('fonts/univers-condensed/universcondensed_bold.ttf');
+}
+
+.maxi-grid-cell {
+	position: relative;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	background-size: contain;
+	aspect-ratio: 6/5;
+	flex-direction: column;
+}
+.maxi-grid-cell {
+	position: relative;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	background-size: contain;
+	aspect-ratio: 6/5;
+	flex-direction: column;
+}
+
+/* .maxi-grid-cell:hover {
+} */
+
+.maxi-grid-cell-text {
+	display:flex;
+	text-align:center;
+	font-size: 0.90vw;
+	font-family:'Univers', monospace;
+	font-stretch: narrower;
+}
+
+
+
+.he-hp { /* high-energy, high pleasantness */
+	background-color: rgb(243, 243, 0);
+}
+
+.he-hp:hover { /* high-energy, high pleasantness */
+	background-color: rgb(255, 255, 143);
+}
+
+.he-lp { /* high-energy, low pleasantness */
+	background-color: rgb(236, 0, 0);
+	color: white;
+}
+
+.he-lp:hover { /* high-energy, low pleasantness */
+	background-color: rgb(255, 70, 70);
+	color: white;
+}
+
+.le-lp { /* low energy, low pleasantness */
+	background-color: rgb(1, 1, 233);
+	color: white;
+}
+
+.le-lp:hover { /* low energy, low pleasantness */
+	background-color: rgb(60, 60, 255);
+	color: white;
+}
+
+.le-hp { /* low energy, high pleasantness */
+	background-color: green;
+	color: white;
+}
+
+.le-hp:hover { /* low energy, high pleasantness */
+	background-color: rgb(34, 164, 34);
+	color: white;
+}
+
+.empty {
+	background-color: white;
+}
+
+.header-button {
+	/* display:inline-block; */
+	display: block;
+	height: 60%;
+	width: 10%;
+	min-width: 100px;
+	/* padding:0.3em 1.2em; */
+	/* margin:0 0.1em 0.1em 0; */
+	border:0.16em solid rgba(255,255,255,0);
+	border-radius:20px;
+	box-sizing: border-box;
+	text-decoration:none;
+	font-family:'Roboto',sans-serif;
+	font-weight:300;
+	font-size: 100%;
+	color:#FFFFFF;
+	text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+	text-align:center;
+	transition: all 0.2s;
+}
+.header-button:hover {
+	border-color: rgba(255,255,255,1);
+}
+
+@media all and (max-width:30em) {
+	.header-button {
+		display:block;
+		margin:0.2em auto;
+	}
+}
+
+.start-button {
+	background-color: rgb(16, 147, 16);
+	margin-left: 10px;
+}

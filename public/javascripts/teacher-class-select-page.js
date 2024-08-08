@@ -1,5 +1,6 @@
 import { getClasses } from "/javascripts/api.js";
 import { sendData } from "/javascripts/api.js";
+import { getData } from "/javascripts/api.js";
 
 // these lastAccessDates are placeholders until we can actually insert this info into the database
 const lastAccessDate = ["June 5, 1924", "May 21, 1924", "June 7, 1924", "June 1, 1924", "April 25, 1924"];
@@ -34,12 +35,16 @@ for (i = 0; i < data.length; i++) {
 const actionPopup = document.getElementById("actionPopup");
 // The code below takes the info we collected above and puts it on the page
 const classOptionGrid = document.getElementById("class-option-grid");
+let studentsEnrolled = [];
+let selectedClassName = '';
 for (let i = 0; i < classNum; i++) {
   let classOption = document.createElement("div");
   classOption.classList.add('class-option');
   classOption.style.backgroundImage = 'url(' + classInfoArray[i].icon + ')';
   classOption.addEventListener('click', () => {
     document.getElementById("action-header").innerHTML = classInfoArray[i].Name;
+    // selectedClassName = classInfoArray[i].Name;
+    // studentsEnrolled = getData("/class-select/get-students", selectedClassName);
     actionPopup.style.visibility = "visible";
     contentDiv.style.opacity = ".5";
   });
@@ -97,11 +102,13 @@ formSubmitButton.addEventListener('click', () => {
   console.log(response);
 });
 
+const addStudentContainer = document.getElementById("addStudentContainer");
 const addStudentText = document.getElementById("addStudent");
 const deleteClassButton = document.getElementById("deleteClass");
 const cancelActionButton = document.getElementById("cancelAction");
 addStudentText.addEventListener('click', () => {
-  console.log("Clikked");
+  addStudentContainer.style.visibility = "visible";
+  actionPopup.style.visibility = "hidden";
 });
 
 deleteClassButton.addEventListener('click', () => {
@@ -116,3 +123,61 @@ cancelActionButton.addEventListener('click', () => {
   actionPopup.style.visibility = "hidden";
   contentDiv.style.opacity = "1";
 });
+
+
+
+
+const studentTableBody = document.getElementById('add-student-table');
+addStudentContainer.style.visibility = "hidden";
+// Here we got to pull data of all students in selected class
+// studentTableBody.appendChild();
+// let studentsEnrolled = getData("/class-select/get-students", selectedClassName);
+console.log(studentsEnrolled);
+
+
+
+
+const addStudentBtn = document.getElementById("addStudentBtn");
+addStudentBtn.addEventListener('click', () => {
+  // Check if there are empty fields in the last added row
+  const rows = studentTableBody.querySelectorAll("tr");
+  if (rows.length > 0) {
+      const lastRow = rows[rows.length - 1];
+      const usernameCell = lastRow.cells[0];
+      const passwordCell = lastRow.cells[1];
+      const username = usernameCell.textContent.trim();
+      const password = passwordCell.textContent.trim();
+      //Check if a name has been provided for the previous row. A new student can't be added until a name has been provided
+      if (username === '' || password === '') {
+          if (username === '') usernameCell.classList.add('highlight-empty');
+          if (password === '') passwordCell.classList.add('highlight-empty');
+          return;
+      }
+  }
+  addStudent();
+});
+
+function addStudent() {
+
+  let row = document.createElement('tr');
+  row.innerHTML = `
+      <td contenteditable="true"></td>
+      <td contenteditable="true"></td>
+      <td class="delete-column"><span class="deleteBtn">❌</span></td>
+    `;
+
+  row.querySelector('.deleteBtn').addEventListener('click', () => {
+      //must mark student in database as deleted. Because student can be 'undeleted', do not remove from uniqueAvatars array
+      row.remove();
+  });
+
+  // Add event listeners to clear the highlight when the user clicks to edit
+  const cells = row.querySelectorAll('td[contenteditable="true"]');
+  cells.forEach(cell => {
+    cell.addEventListener('focus', () => {
+      cell.classList.remove('highlight-empty');
+    });
+  });
+
+  studentTableBody.appendChild(row);
+}
